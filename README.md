@@ -4,7 +4,7 @@
 
 If you do not yet have astral-uv, please follow the [installation instructions](https://docs.astral.sh/uv/getting-started/installation/) on the uv website.
 
-Clone this rep, `cd` into the repo, and run `uv sync`.
+Clone this repo, `cd` into the repo, and run `uv sync`.
 
 ## What is included
 
