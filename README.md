@@ -6,6 +6,10 @@ If you do not yet have astral-uv, please follow the [installation instructions](
 
 Clone this rep, `cd` into the repo, and run `uv sync`.
 
+## What is included
+
+Code and data from Quarter 1, Objective 1 (existing linear KF inported directly into t-route as an internal Python libray, baseline simulation results generated), Subtasks 1-3
+
 ## How to use
 
 1. Hydrofabric subsetting
