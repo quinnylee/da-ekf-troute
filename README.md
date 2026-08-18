@@ -6,6 +6,8 @@ If you do not yet have astral-uv, please follow the [installation instructions](
 
 Clone this repo, `cd` into the repo, and run `uv sync`.
 
+Additionally, you will need [Docker Desktop](https://docs.docker.com/desktop/) to run t-route, or you can [install t-route from scratch](https://github.com/CIROH-UA/t-route#installation).
+
 ## What is included
 
 Code and data from Quarter 1, Objective 1 (existing linear KF inported directly into t-route as an internal Python libray, baseline simulation results generated), Subtasks 1-3
