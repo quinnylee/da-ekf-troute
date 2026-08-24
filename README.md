@@ -4,7 +4,9 @@
 
 If you do not yet have astral-uv, please follow the [installation instructions](https://docs.astral.sh/uv/getting-started/installation/) on the uv website.
 
-Clone this rep, `cd` into the repo, and run `uv sync`.
+Clone this repo, `cd` into the repo, and run `uv sync`.
+
+Additionally, you will need [Docker Desktop](https://docs.docker.com/desktop/) to run t-route, or you can [install t-route from scratch](https://github.com/CIROH-UA/t-route#installation).
 
 ## What is included
 
