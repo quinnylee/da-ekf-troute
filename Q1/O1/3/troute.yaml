@@ -28,7 +28,7 @@ network_topology_parameters:
             alt: "alt"
     waterbody_parameters:
         #----------
-        break_network_at_waterbodies: False
+        break_network_at_waterbodies: True
 
 #--------------------------------------------------------------------------------
 compute_parameters:
@@ -51,6 +51,8 @@ compute_parameters:
         max_loop_size: 576.0 # [number of timesteps]
         # max_loop_size == nts so that output is single file
     data_assimilation_parameters:
+    #----------
+        usgs_timeslices_folder   : usgs_timeslices/
         streamflow_da:
             #----------
             streamflow_nudging: False
@@ -59,7 +61,7 @@ compute_parameters:
             #----------
             reservoir_persistence_da:
                 #----------
-                reservoir_persistence_usgs: False
+                reservoir_persistence_usgs: True
                 reservoir_persistence_usace: False
             reservoir_rfc_da:
                 #----------
@@ -74,4 +76,4 @@ output_parameters:
         stream_output_directory: ./outputs
         stream_output_time: -1 # -1 adds all outputs to a single file
         stream_output_type: ".nc" #please select only between netcdf '.nc' or '.csv' or '.pkl'
-        stream_output_internal_frequency: 60 #[min] it should be order of 5 minutes. For instance if you want to output every hour put 60
+        stream_output_internal_frequency: 5 #[min] it should be order of 5 minutes. For instance if you want to output every hour put 60
