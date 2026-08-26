@@ -10,7 +10,7 @@ Additionally, you will need [Docker Desktop](https://docs.docker.com/desktop/) t
 
 ## What is included
 
-Code and data from Quarter 1, Objective 1 (existing linear KF inported directly into t-route as an internal Python libray, baseline simulation results generated), Subtasks 1-3
+Code and data from Quarter 1, Objective 1 (existing linear KF inported directly into t-route as an internal Python libray, baseline simulation results generated), Subtasks 1-4
 
 ## How to use
 
@@ -38,3 +38,11 @@ Code and data from Quarter 1, Objective 1 (existing linear KF inported directly 
     ```
 
     Remember to change the absolute path in the mounted volume to your path!
+
+4. Preprocessing KF input data
+
+    Use `ngen_hf_to_json.ipynb` to convert the geopackage to a KF-compatible models file that uses NextGen IDs.
+
+    Use `usgs_to_ngen_id.ipynb` to convert the USGS-to-COMID file to a USGS-to-wbid file.
+
+    This step is incomplete until the t-route-compatible KF BMI is complete.
