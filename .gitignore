@@ -8,3 +8,6 @@ wheels/
 
 # Virtual environments
 .venv
+
+# USGS timeslices
+Q1/O1/3/usgs_timeslices
