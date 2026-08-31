@@ -10,7 +10,7 @@ You will also need to [install t-route from scratch](https://github.com/CIROH-UA
 
 ## What is included
 
-Code and data from Quarter 1, Objective 1 (existing linear KF inported directly into t-route as an internal Python libray, baseline simulation results generated), Subtasks 1-4
+Code and data from Quarter 1, Objective 1 (existing linear KF inported directly into t-route as an internal Python libray, baseline simulation results generated, dynamic and static variables generated, KF run through API with t-route inputs), Subtasks 1-5
 
 ## How to use
 
