@@ -6,7 +6,7 @@ If you do not yet have astral-uv, please follow the [installation instructions](
 
 Clone this repo, `cd` into the repo, and run `uv sync`.
 
-Additionally, you will need [Docker Desktop](https://docs.docker.com/desktop/) to run t-route, or you can [install t-route from scratch](https://github.com/CIROH-UA/t-route#installation).
+You will also need to [install t-route from scratch](https://github.com/CIROH-UA/t-route#installation). Make sure you install the `EKF_Troute` branch of t-route.
 
 ## What is included
 
@@ -45,4 +45,8 @@ Code and data from Quarter 1, Objective 1 (existing linear KF inported directly 
 
     Use `usgs_to_ngen_id.ipynb` to convert the USGS-to-COMID file to a USGS-to-wbid file.
 
-    This step is incomplete until the t-route-compatible KF BMI is complete.
+5. Running KF with API
+
+    Note: This is a `git clone` of @slama0077's `Python_Interface` repository.
+
+    Run the `interface.ipynb` notebook.
