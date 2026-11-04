@@ -11,9 +11,10 @@ import os
 import itertools
 from io import BytesIO
 from pathlib import Path
-from datetime import datetime
+from datetime import datetime, timedelta
 import concurrent.futures as cf
 from typing import Tuple
+import re
 
 import requests
 import nwmurl
@@ -271,6 +272,10 @@ def channelrouting_nwm2ngen(
             raise RuntimeError(f"{nwm_file} does not exist")
 
         with xr.open_dataset(file_obj, chunks={}) as nwm_data:
+            nwm_data["q_lateral"] = (
+                nwm_data["qSfcLatRunoff"]
+                + nwm_data["qBucket"]
+            )
             data_allnwm = {}
             try:
                 subset = nwm_data.sel(feature_id=nwm_cats)
@@ -288,13 +293,19 @@ def channelrouting_nwm2ngen(
             data_allnwm = dict(
                 zip(subset["feature_id"].values, subset["q_lateral"].values)
             )
-            t = datetime.strftime(
-                datetime.strptime(
-                    nwm_file.split("/")[-1].split(".")[0], "%Y%m%d%H%M"
-                ),
-                "%Y-%m-%d %H:%M:%S",
+
+            match = re.search(
+                r"nwm\.(?P<date>\d{8})/.*?\.tm(?P<tm>\d{2})\.conus\.nc",
+                nwm_file,
             )
-            t_list.append(t)
+
+            if match:
+                t = (
+                    datetime.strptime(match["date"], "%Y%m%d")
+                    + timedelta(hours=16 - int(match["tm"]))
+                ).strftime("%Y-%m-%d %H:%M:%S")
+
+                t_list.append(t)
         del nwm_data, subset
         data_allngen = {}
         valid_nwm_set = set(valid_nwm_cats)
@@ -381,25 +392,33 @@ def main():
     """Get NWM retro data, convert it to t-route ingestible format
     """
     # run nwmurl
-    start_date = "202208220000"
-    end_date = "202208240000"
-    urlbaseinput = 4
-    selected_var_types = [1]
-    selected_object_types = [2]
+    start_date = "2023051300"
+    end_date = "2023051500"
+    fcst_cycle = [16]
+    lead_time = [23,22,21,20,19,18,17,16,15,14,13,12,11,10,9,8,7,6,5,4,3,2,1,0]
+    varinput = 1
+    geoinput = 1
+    runinput = 6
+    urlbaseinput = 3
+    meminput = 0
     write_to_file = True
 
-    _ = nwmurl.generate_urls_retro(
-        start_date,
-        end_date,
-        urlbaseinput,
-        selected_object_types,
-        selected_var_types,
-        write_to_file
+    _ = nwmurl.generate_urls_operational(
+    start_date,
+    end_date,
+    fcst_cycle,
+    lead_time,
+    varinput,
+    geoinput,
+    runinput,
+    urlbaseinput,
+    meminput,
+    write_to_file
     )
 
     # read nwmurl list
     nwm_forcing_files = []
-    with open("retro_filenamelist.txt", "r", encoding="utf-8") as fp:
+    with open("filenamelist.txt", "r", encoding="utf-8") as fp:
         for jline in fp.readlines():
             nwm_forcing_files.append(jline.strip())
 
@@ -407,7 +426,7 @@ def main():
     with open("nwm_to_ngen_map.json", "r", encoding="utf-8") as map_file:
         full_nwm_ngen_map = json.load(map_file)
 
-    gpkg = gpd.read_file("../1/tx_subset.gpkg", layer="nexus")
+    gpkg = gpd.read_file("/Users/qylee/Documents/da_ekf_troute/Q1/O1/1//tx_res_calibrated.gpkg", layer="nexus")
     catchments = gpkg["id"].to_list()
     nwm_ngen_map = {}
     for catch in catchments:
@@ -424,7 +443,8 @@ def main():
         nwm_forcing_files, nprocs, nwm_ngen_map
     )
 
-    forcing_path = "./lateral_inflow"
+    forcing_path = Path("./tx_res_calibrated_lateral_inflow")
+    forcing_path.mkdir(parents=True, exist_ok=True)
 
     multiprocess_write_df(
         data_array,
